@@ -1,0 +1,80 @@
+package CodeAlpha;
+import java.util.*;
+
+public class Student_Grade_Tracker {
+
+	public static void main(String[] args) {
+		try (Scanner scanner = new Scanner(System.in)) {
+			int choose = 0;
+			String[] subject = {"English","Hindi","Science","Social Science","Mathematics"};
+			float[] grades = new float[5];
+			System.out.println("Enter the grades of the student :\n1.English\n2.Hindi\n3.Science\n4.Social Science\n5.Mathematics\nrepectively and don't forgot to hit the enter button after entering the grade of one subject.");
+			for(int i = 0; i < grades.length; i++) {
+				System.out.println(subject[i]+" = "+(grades[i] = scanner.nextFloat()));
+				System.out.println("");
+			}
+			while(choose != 4) {
+				System.out.println("Please Entered your choose accordingly :\n1.To see the grades\n2.To find the average\n3.To see the higest grade subject\n4.To see the lowest grade subject.");
+				choose = scanner.nextInt();
+				switch(choose) {
+				case 1 : showGrade(subject,grades);
+				break;
+				case 2 : average(grades);
+				break;
+				case 3 : sortHigh(grades);
+				break;
+				case 4 : sortLess(grades);
+				break;
+				default : System.out.println("Please check your choose!!\n");
+				break;
+				}
+			}
+		}
+		System.out.println("Thank You! For Visiting\n");
+	}
+	/*This method will take subject and grades array as argument to show the inserted values*/
+	public static void showGrade(String[] a,float[] b) {
+		System.out.println("Entered grades are :");
+		for(int i = 0; i < a.length; i++) {
+			System.out.println(a[i]+" = "+b[i]);
+		}
+		System.out.println("");
+	}
+	/*This method will take grades array as argument and calculate to provide average of the grades*/
+	public static void average(float[] a) {
+		float sum = 0;
+		float aver;
+		for(int i = 0; i < a.length; i++) {
+			sum = sum + a[i];
+		}
+		aver = sum / a.length - 1;
+		System.out.println("The average of the student is : "+aver+"\n");
+	}
+	/*This method will take grades array as argument and show the highest grade among all*/
+	public static void sortHigh(float[] a) {
+		float high = 0;
+		for(int i = 0; i < 1; i++) {
+			high = a[i];
+			for(int j = 1; j < a.length; j++) {
+				if(a[j] > high) {
+					high = a[j];
+				}
+			}
+		}
+		System.out.println("Highest grades is "+high+"\n");
+	}
+	/*This method will take grades array as argument and show the lowest grade among all*/
+	public static void sortLess(float[] a) {
+		float low = 0;
+		for(int i = 0; i < a.length; i++) {
+			low = a[i];
+			for(int j = 1; j < a.length; j++) {
+				if(low > a[j]) {
+					low = a[j];
+				}
+			}
+		}
+		System.out.println("Lowest grades is "+low+"\n");
+	}
+}
+
