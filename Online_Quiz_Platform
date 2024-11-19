@@ -1,0 +1,127 @@
+package CodeAlpha;
+import java.util.*;
+public class Online_Quiz_Platform {
+	public static void main(String[] args) {
+		try (Scanner scanner = new Scanner(System.in)) {
+			int number;
+			System.out.println("How many accounts you like in your banking application :");
+			number = scanner.nextInt();
+			Customer[] customer = new Customer[number];
+			for(int i = 0; i < number; i++) {
+				customer[i] = new Customer();
+				customer[i].openAccount();
+			}
+			int choose;
+			do {
+				   System.out.println("\n ***Banking System Application***");  
+			        System.out.println("1. Display all account details \n2. Search by Account number\n3. Deposit the amount \n4. Withdraw the amount \n5.Exit ");  
+			        System.out.println("Enter your choice: ");  
+			        choose = scanner.nextInt();  
+			        switch(choose) {
+			        case 1 : for(int i = 0; i < customer.length ; i++){
+			        			customer[i].showDetail();
+			        }
+			        break;
+			        case 2 : System.out.println("Enter the Account number Which you like to found : ");
+			        int accNum = scanner.nextInt();
+			        boolean found = false;
+			        for(int i = 0; i < customer.length ; i++){
+						found = customer[i].foundDetail(accNum);
+						if(found) {
+							break;
+						}
+			        	}
+			        if(!found) {
+			        	System.out.println("****Sorry!! Given Account is no available in the system****");
+			        }
+			        break;
+			        case 3 :  System.out.println("Enter the Account Number in which you like to deposit Money :");
+			        int accNumber = scanner.nextInt();
+			        boolean foundAcc = false;
+			        for(int i = 0; i < customer.length; i++) {
+			        	foundAcc = customer[i].foundDetail(accNumber);
+			        if(foundAcc) {
+			        	customer[i].deposit();
+						break;
+					}
+			        }
+			        if(!foundAcc){
+						System.out.println("****Sorry!! Given Account is no available in the system****");
+						}
+			        break;
+			        case 4 :  System.out.println("Enter the Account Number from which you like to Withdraw Money :");
+			        int accNumBer = scanner.nextInt();
+			        boolean foundAcct = false;
+			        for(int i = 0; i < customer.length; i++) {
+			        	foundAcct = customer[i].foundDetail(accNumBer);
+			        if(foundAcct) {
+			        	customer[i].withdraw();
+						break;
+					}
+			        }
+			        if(!foundAcct){
+						System.out.println("****Sorry!! Given Account is no available in the system****");
+						}
+			        break;
+			        case 5 : System.out.println("Exiting.......");
+			        break;
+			        }      
+			}while(choose != 5);
+		}
+		System.out.println("Thank You !! for using this Application ");
+	}
+}
+class Customer{
+    String name;
+	int accountId;
+	String type;
+	long balance;
+	Scanner scanner = new Scanner(System.in);
+	public void openAccount() {
+		System.out.println("Enter the name of the Account Holder :");
+		name = scanner.nextLine();
+		System.out.println("Enter the type of the Account (saving / current):");
+		type = scanner.next();
+		System.out.println("Enter the Account Number :");
+		accountId = scanner.nextInt();
+		System.out.println("Enter the Balance in the Account (in Rupees):");
+		balance = scanner.nextLong();
+	}
+	public void withdraw() {
+		 System.out.println("How much money you like to Withdraw from your Account (in Rupees):");
+    	 long withdrawAmmount = scanner.nextLong();
+    	 if(withdrawAmmount > balance) {
+    		 System.out.println("Your not Entering a valid ammount :");
+    	 }else {
+    	 balance = balance - withdrawAmmount;
+    	 System.out.println("Your balance after withdrawing "+withdrawAmmount+" Rupees from your Account is "+balance+" Rupees");		
+    	 }	 
+	}
+	public void deposit() {
+		 System.out.println("How much money you like to deposit in your Account (in Rupees) :");
+    	 long depositeAmmount = scanner.nextLong();
+    	 balance = balance + depositeAmmount;
+		if(balance >= 500000) {
+			balance = balance - depositeAmmount;
+			 System.out.println("The limit of this account is only 5 Lakhs Rupees");
+			 System.out.println("Visit near branch to increase your balance limit");
+		}else {
+		System.out.println("Money is Successfully Deposite in your Account no "+accountId+"\nYour total Balance is "+balance+" Rupees");
+		}
+	}
+	public void showDetail() {
+		System.out.println("**************************************************");
+		System.out.println("The name of Account Holder is : "+name);
+		System.out.println("The Type of the Account is : "+type);
+		System.out.println("The Account Number is : "+accountId);
+		System.out.println("The Balance in this Acoount is Rupees: "+balance);
+		System.out.println("**************************************************");
+	}
+	public boolean foundDetail(int num){
+		if(accountId == num) {
+			showDetail();
+			return true;
+		}
+		return false;
+	}
+}
