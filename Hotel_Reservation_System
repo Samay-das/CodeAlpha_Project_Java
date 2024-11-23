@@ -1,0 +1,156 @@
+package CodeAlpha;
+import java.util.Scanner;
+
+ class Node {
+    int roomId;
+    String type;
+    double price;
+    boolean isAvailable;
+    Node next;
+}
+class LinkedListOfRooms {
+    Node head;
+    public void insert(int id,String roomType,double roomPrice,boolean availality){
+        Node node = new Node();
+        node.roomId = id;
+        node.type = roomType;
+        node.price = roomPrice;
+        node.isAvailable = availality;
+        node.next = null;
+        if (head == null) {
+            head = node;
+        }else{
+            Node n = head;
+            while(n.next != null){
+                n = n.next;
+            }
+            n.next = node;
+        }
+    }
+    public void show(){
+        Node node = head;
+        while (node.next != null) {
+        	 System.out.print("|  "+node.roomId+"       |  ");
+             System.out.print("     "+node.type+"      |  ");
+             System.out.print(" 	 "+node.price+"        |  ");
+             System.out.print("       "+node.isAvailable+"         |");
+            System.out.println("");
+            node = node.next;
+        }
+        System.out.print("|  "+node.roomId+"       |  ");
+        System.out.print("     "+node.type+"      |  ");
+        System.out.print(" 	 "+node.price+"        |  ");
+        System.out.print("       "+node.isAvailable+"         |");
+        System.out.println("");
+    }
+    public void deleteAtPostion(int roomIdToResevered){
+        int index = roomIdToResevered - 100;
+        Node node = head;
+        Hotel_Reservation_System hotel = new Hotel_Reservation_System();
+        if (index == 0) {
+            System.out.println("Reseveration Detail is :");
+            System.out.println("User name is :"+hotel.name);
+            System.out.println("The age is "+hotel.age);
+            System.out.println("Room Id is : "+node.roomId);
+            System.out.println("Room Type is : "+node.type);
+            System.out.println("Room Price is : "+node.price);
+            System.out.println("if block");
+            head = head.next;
+        }else if (index < 4 && index > 0) {
+            Node temp = head;
+            Node temp1 = null;
+            for(int i = 0; i < index - 1; i++){
+                temp = temp.next;
+            }
+            temp1 = temp.next;
+            temp.next = temp1.next;
+            System.out.println("Reseveration Detail is :");
+            System.out.println("User name is :"+hotel.name);
+            System.out.println("The age is "+hotel.age);
+            System.out.println("Room Id is : "+temp1.roomId);
+            System.out.println("Room Type is : "+temp1.type);
+            System.out.println("Room Price is : "+temp1.price);
+            temp1 = null;
+        }else{
+            Node temp = head;
+            Node temp1 = null;
+            for(int i = 0; i < index - 1; i++){
+                temp = temp.next;
+            }
+            temp1 = temp.next;
+            temp.next = null;
+            System.out.println("Reseveration Detail is :");
+            System.out.println("User name is :"+hotel.name);
+            System.out.println("The age is "+hotel.age);
+            System.out.println("Room Id is : "+temp1.roomId);
+            System.out.println("Room Type is : "+temp1.type);
+            System.out.println("Room Price is : "+temp1.price);
+            temp1 = null;
+        }
+    }
+}
+
+public class Hotel_Reservation_System {
+    public static String name;
+    public static String password;
+    public static int age;
+        public static void main(String[] args) {
+            Scanner scanner = new Scanner(System.in);
+            System.out.println("Welcome to MyDestination Hotel");
+            LinkedListOfRooms list = new LinkedListOfRooms();
+            list.insert(100, "Single", 2800, true);
+            list.insert(101, "Double", 5300, true);
+            list.insert(102, "Single", 2800, true);
+            list.insert(103, "family", 8000, true);
+            list.insert(104, "Double", 5200, true);
+            System.out.println("Please First create an account :");
+                    System.out.println("Enter Your Username (without space):");
+                    name = scanner.next();
+                    System.out.println("Enter Your Password (without space):");
+                    password = scanner.next();
+                    System.out.println("Enter Your Age :");
+                    age = scanner.nextInt();
+        int choose;
+        do{
+        	System.out.println("**************************");
+            System.out.println("Choose Your Choice Wisely:\n1.To see Available Rooms.\n2.To see Account details.\nTo make a Reservation.\n4.Exit");
+            System.out.println("**************************");
+            choose = scanner.nextInt();
+            switch (choose) {
+                case 1:
+                	System.out.println("******************************************************************************");
+                	System.out.print("| Room Id    |    ");
+                    System.out.print("  Room Type    |    ");
+                    System.out.print("  Room Price     |   ");
+                    System.out.print("  Room Available   |     ");
+                    System.out.println("");
+                	System.out.println("******************************************************************************");
+                    list.show();
+                    System.out.println("******************************************************************************");
+                    break;
+                case 2:
+                	System.out.println("**************************");
+                    System.out.println("User Name is :"+name);
+                    System.out.println("user Password is :"+password);
+                    System.out.println("User Age is :"+age);
+                    System.out.println("**************************");
+                    break;
+                case 3:
+                	System.out.println("**************************");
+                    System.out.println("Which room you like to book (Enter the roomid you like to purchase) :");
+                    int roomIdTo = scanner.nextInt();
+                    list.deleteAtPostion(roomIdTo); 
+                    System.out.println("Your room is Booked Sucessfully!!");
+                    System.out.println("**************************");
+                    break; 
+                case 4:
+                System.out.println("*******Thank You!! for Using this application.*******");      
+                default:
+                System.out.println("****Please Enter a Valid Choice :****");
+                    break;
+            }
+        }while(choose != 4);
+        scanner.close();
+    }
+   
+}
